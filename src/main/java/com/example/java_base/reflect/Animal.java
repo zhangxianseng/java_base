@@ -4,17 +4,25 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 /**
  * @Author: zzq
  * @Description:
  * @Date: 2019/5/24 17:53
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Animal {
-    public String name ="Dog";
-    public int   age  =30 ;
+    public String name;
+    public int age;
+
+    public Animal() {
+    }
+
+    public Animal(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
 
     public Animal(String name) {
         this.name = name;
@@ -25,4 +33,17 @@ public class Animal {
         return "Hello,"+name;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Animal animal = (Animal) o;
+        return age == animal.age &&
+                Objects.equals(name, animal.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, age);
+    }
 }

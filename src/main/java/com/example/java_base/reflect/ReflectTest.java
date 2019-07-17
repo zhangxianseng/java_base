@@ -1,6 +1,8 @@
 package com.example.java_base.reflect;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * @Author: zzq
@@ -9,7 +11,7 @@ import java.lang.reflect.Field;
  */
 public class ReflectTest {
     public static void main(String [] args){
-        //1、加载类 ，指定类的完全限定名：包名+类名
+        //使用Class类的newInstance方法(反射机制)
         Class c1 = null;
         try {
             c1 = Class.forName("com.example.java_base.reflect.Animal");
@@ -17,19 +19,26 @@ public class ReflectTest {
             Animal animal = (Animal)c1.newInstance();
             Field[] fields = c1.getDeclaredFields();
             for(Field field :fields){
-                //System.out.println(field + "##########" + field.getType());
                 if(field.getType().equals(String.class)){
                     String name = (String)field.get(animal);
                     System.out.println(name);
                 }
             }
 
+            // 使用Constructor类的newInstance方法(反射机制)
+                Constructor<Animal> constructor = Animal.class.getConstructor(String.class);
+
+                constructor.newInstance("张三");
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InstantiationException e) {
+            e.printStackTrace();
+        }catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
 

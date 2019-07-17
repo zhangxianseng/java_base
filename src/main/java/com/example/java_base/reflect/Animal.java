@@ -16,6 +16,10 @@ public class Animal {
     public String name ="Dog";
     public int   age  =30 ;
 
+    public Animal(String name) {
+        this.name = name;
+    }
+
     //公开 方法  返回类型和参数均有
     public String sayName(String name){
         return "Hello,"+name;

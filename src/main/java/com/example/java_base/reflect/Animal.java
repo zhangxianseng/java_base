@@ -1,8 +1,6 @@
 package com.example.java_base.reflect;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.Objects;
 
@@ -36,14 +34,16 @@ public class Animal {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Animal)) return false;
+        if (!super.equals(o)) return false;
         Animal animal = (Animal) o;
-        return age == animal.age &&
-                Objects.equals(name, animal.name);
+        return getAge() == animal.getAge() &&
+                Objects.equals(getName(), animal.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, age);
+
+        return Objects.hash(super.hashCode(), getName(), getAge());
     }
 }

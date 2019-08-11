@@ -1,8 +1,12 @@
 package com.example.java_base.thread;
 
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 /**
  * 线程池调用客户端
@@ -11,7 +15,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class ThreadPoolExecutorTest {
 
-    //池中所保存的线程数，包括空闲线程。
+   /* //池中所保存的线程数，包括空闲线程。
     final static int corePoolSize = 5;
     //池中允许的最大线程数。
     final static int maximumPoolSize = 10;
@@ -33,8 +37,56 @@ public class ThreadPoolExecutorTest {
                     threadPoolExecutor.getQueue().size());
         }
         //关掉线程池
-        threadPoolExecutor.shutdown();
+        threadPoolExecutor.shutdown();*/
+
+    public static void main(String[] args) {
+
+        ThreadPoolTest();
+    }
+
+    public static void ThreadPoolTest() {
+        ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
+        threadPoolTaskExecutor.setCorePoolSize(5);
+        threadPoolTaskExecutor.setMaxPoolSize(50);
+        threadPoolTaskExecutor.initialize();
+
+        List<String> paymentSeqNoList = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            paymentSeqNoList.add(String.valueOf(i));
+        }
+        Long startTime = System.currentTimeMillis();
+        //线程池提交返回
+        for (String paymentSeqNo : paymentSeqNoList) {
+            // submit提交执行
+            Future future = threadPoolTaskExecutor.submit(new MyTestCallable(paymentSeqNo));
+            try {
+                System.out.println(future.get());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+        threadPoolTaskExecutor.shutdown();
+        Long endTime = System.currentTimeMillis();
+        System.out.println("耗时1：" + (endTime - startTime));
 
     }
 
 }
+
+
+class MyTestCallable implements Callable {
+    String paymentSeqNo;
+
+    MyTestCallable(String paymentSeqNo) {
+        this.paymentSeqNo = paymentSeqNo;
+    }
+
+    @Override
+    public String call() throws Exception {
+        System.out.println("paymentSeqNo:" + paymentSeqNo);
+        return paymentSeqNo;
+    }
+}
+

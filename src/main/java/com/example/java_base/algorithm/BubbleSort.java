@@ -14,6 +14,11 @@ import com.alibaba.fastjson.JSONObject;
  **/
 public class BubbleSort {
 
+    /**
+     *  普通版
+     * @param arr
+     * @param n
+     */
     public void bubbleSort1(Integer[] arr, int n) {
         int a =0;
         //1.双重for循环。(外循环控制轮数)
@@ -32,7 +37,36 @@ public class BubbleSort {
         }
     }
 
+
+    /**
+     * 每轮比较少比较一次。（每一轮都会比较出一个最大值，然后后一轮没有必要再比较了，所以没比较一轮，就少比较一次。。。）
+     * @param arr
+     * @param n
+     */
     public void bubbleSort2(Integer[] arr, int n) {
+        int a =0;
+        //1.双重for循环。(外循环控制轮数)
+        for(int i=0; i< n-1; ++i){
+            //2.指定轮数和次数（内循环控制次数）
+            for(int j=0; j < n-i-1; ++j){
+                //3.判断是否符合标准。如果符合标准交换位置。
+                //从小到大排列顺滑，如果前面的比后面的大，那么交换位置。
+                if(arr[j] > arr[j+1]){
+                    int temp = arr[j];
+                    arr[j] = arr[j+1];
+                    arr[j+1] = temp;
+                }
+                System.out.println(JSON.toJSONString(arr) + a++);
+            }
+        }
+    }
+
+    /**
+     * 终极版
+     * @param arr
+     * @param n
+     */
+    public void bubbleSort3(Integer[] arr, int n) {
         int a = 0;
         //如果只有一个元素就不用排序了
         if (n <= 1){

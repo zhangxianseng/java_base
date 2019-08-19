@@ -93,11 +93,32 @@ public class BubbleSort {
         }
     }
 
+    public void bubbleSort4(Integer[] arr, int n){
+
+        for(int i=0; i<n-1; ++i){
+            boolean flag = false;
+            for (int j = 0; j <n-i-1 ; ++j) {
+                if(arr[j] > arr[j+1]){
+                    int a = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j+1] = a;
+                    flag = true;
+                }
+            }
+            if(!flag){
+                break;
+            }
+        }
+        System.out.println(JSONObject.toJSONString(arr));
+    }
+
+
+
 
 
     public static void main(String[] args) {
         Integer arr[] = {2, 4, 7, 6, 8, 5, 9};
         BubbleSort bubbleSort = new BubbleSort();
-        bubbleSort.bubbleSort1(arr, arr.length);
+        bubbleSort.bubbleSort4(arr, arr.length);
     }
 }

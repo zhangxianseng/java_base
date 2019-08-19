@@ -6,6 +6,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.UUID;
 
 /**
  * @Author: zzq
@@ -48,6 +49,7 @@ public class ReflectTest {
         String[] array = new String[]{"123", "234", "345"};
         int[] a = new int[]{1, 2, 3};
         printObaject(a);
+
 
         /**
          * set集合是无序集合，不允许有重复数据，存数据慢(需要比对每个数据的hash值是否相等)，取数据比较快
